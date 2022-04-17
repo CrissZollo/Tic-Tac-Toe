@@ -11,7 +11,7 @@ int main()
 	bool gameEnded = false;
 	int currentPlayer = 0;
 	char placement[9] = { '1' , '2' , '3' , '4' , '5' , '6' , '7', '8', '9' };
-	drawBoard(placement);
+	drawBoard(placement); // Initial Draw of the board
 
 	while (gameEnded == false)
 	{
@@ -22,6 +22,12 @@ int main()
 	}
 }
 
+/// <summary>
+/// Lets the player place a symbol on the board
+/// </summary>
+/// <param name="currentPlayer">The current players turn</param>
+/// <param name="placement">Shows the empty/taken tiles in the game</param>
+/// <param name="playerSymbols">Symbols that can be placed in the game</param>
 void placeSymbol(int currentPlayer, char* placement, char* playerSymbols) {
 	
 	std::cout << "Player " << currentPlayer+1 << " choose a box to play in: ";
@@ -33,7 +39,10 @@ void placeSymbol(int currentPlayer, char* placement, char* playerSymbols) {
 	system("cls");
 }
 
-
+/// <summary>
+/// Draws the Tic Tac Toe board with referens to the the Char array 'placement'
+/// </summary>
+/// <param name="placement">Shows the empty/taken tiles in the game</param>
 void drawBoard(char* placement) {
 
 
