@@ -35,8 +35,17 @@ void placeSymbol(int currentPlayer, char* placement, char* playerSymbols) {
 	int box;
 	std::cin >> box;
 
-	placement[box - 1] = playerSymbols[currentPlayer];
-	system("cls");
+	if (placement[box - 1] != playerSymbols[0] && placement[box - 1] != playerSymbols[1])
+	{
+		placement[box - 1] = playerSymbols[currentPlayer];
+		system("cls");
+	}
+	else
+	{
+		std::cout << "The space was already taken, Try Again!" << std::endl;
+		placeSymbol(currentPlayer, placement, playerSymbols);
+	}
+
 }
 
 /// <summary>
@@ -44,8 +53,6 @@ void placeSymbol(int currentPlayer, char* placement, char* playerSymbols) {
 /// </summary>
 /// <param name="placement">Shows the empty/taken tiles in the game</param>
 void drawBoard(char* placement) {
-
-
 	std::cout << "       |       |       " << std::endl;
 	std::cout << "   "<< placement[0] << "   |   "<< placement[1] << "   |   "<< placement[2] << "   " << std::endl;
 	std::cout << "       |       |       " << std::endl;
