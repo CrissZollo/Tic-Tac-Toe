@@ -1,25 +1,40 @@
 #include <iostream>
 #include <string>
+#include <windows.h>
 
 void placeSymbol(int currentPlayer, char* placement, char* playerSymbols);
+bool checkIfWon(int currentPlayer, int* winningPos, char* playerSymbol, char* placement);
 void drawBoard(char* placement);
 
 
 int main()
 {
-	char playerSymbols[2] = {'X', 'O'};
+	char playerSymbols[2] = { 'X', 'O' };
 	bool gameEnded = false;
 	int currentPlayer = 0;
 	char placement[9] = { '1' , '2' , '3' , '4' , '5' , '6' , '7', '8', '9' };
+	int winningPos[8][3] = {
+		{1,2,3},
+		{4,5,6},
+		{7,8,9},
+		{1,4,7},
+		{2,5,8},
+		{3,6,9},
+		{1,5,9},
+		{3,5,7}
+	};
 	drawBoard(placement); // Initial Draw of the board
 
 	while (gameEnded == false)
 	{
 		placeSymbol(currentPlayer, placement, playerSymbols);
 		drawBoard(placement);
+		gameEnded = checkIfWon(currentPlayer, (int*)winningPos, playerSymbols, placement);
 
 		currentPlayer == 0 ? currentPlayer = 1 : currentPlayer = 0;
 	}
+
+	Sleep(2000);
 }
 
 /// <summary>
@@ -45,7 +60,22 @@ void placeSymbol(int currentPlayer, char* placement, char* playerSymbols) {
 		std::cout << "The space was already taken, Try Again!" << std::endl;
 		placeSymbol(currentPlayer, placement, playerSymbols);
 	}
+}
 
+/// <summary>
+/// Checks if a player has won or not
+/// </summary>
+bool checkIfWon(int currentPlayer, int* winningPos, char* playerSymbol, char* placement) {
+
+	for (int i = 0; i < 8; i++)
+	{
+		int index = i * 3;
+		if (placement[winningPos[index]-1] == playerSymbol[currentPlayer] && placement[winningPos[index+1]-1] == playerSymbol[currentPlayer] && placement[winningPos[index+2]-1] == playerSymbol[currentPlayer]) {
+			std::cout << "Player " << currentPlayer + 1 << " wins!" << std::endl;
+			return true;
+		}
+	}
+	return false;
 }
 
 /// <summary>
