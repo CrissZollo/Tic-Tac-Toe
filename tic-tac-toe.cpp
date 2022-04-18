@@ -3,7 +3,7 @@
 #include <windows.h>
 
 void placeSymbol(int currentPlayer, char* placement, char* playerSymbols);
-bool checkIfWon(int currentPlayer, int* winningPos, char* playerSymbol, char* placement);
+bool checkIfWon(int currentPlayer, int* winningPos, char* playerSymbol, char* placement, int turn);
 void drawBoard(char* placement);
 
 
@@ -23,14 +23,15 @@ int main()
 		{1,5,9},
 		{3,5,7}
 	};
+	int currentTurn = 1;
 	drawBoard(placement); // Initial Draw of the board
 
 	while (gameEnded == false)
 	{
 		placeSymbol(currentPlayer, placement, playerSymbols);
 		drawBoard(placement);
-		gameEnded = checkIfWon(currentPlayer, (int*)winningPos, playerSymbols, placement);
-
+		gameEnded = checkIfWon(currentPlayer, (int*)winningPos, playerSymbols, placement, currentTurn);
+		currentTurn++;
 		currentPlayer == 0 ? currentPlayer = 1 : currentPlayer = 0;
 	}
 
@@ -65,7 +66,12 @@ void placeSymbol(int currentPlayer, char* placement, char* playerSymbols) {
 /// <summary>
 /// Checks if a player has won or not
 /// </summary>
-bool checkIfWon(int currentPlayer, int* winningPos, char* playerSymbol, char* placement) {
+bool checkIfWon(int currentPlayer, int* winningPos, char* playerSymbol, char* placement, int turn) {
+
+	if (turn == 9) {
+		std::cout << "It's a tie!";
+		return true;
+	}
 
 	for (int i = 0; i < 8; i++)
 	{
